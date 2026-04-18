@@ -1,2 +1,1 @@
-<img width="1440" height="1122" alt="ER Diagram" src="https://github.com/user-attachments/assets/c179d202-dde1-4430-a35e-3d369607cd8a" />
-
+<img width="1440" height="1050" alt="ER Diagram" src="https://github.com/user-attachments/assets/c723ce3d-dc9a-43ef-8632-5e915a609c55" />
