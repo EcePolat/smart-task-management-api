@@ -75,6 +75,11 @@ Relationships:
 - A task belongs to a category
 - A task can have AI suggestions
 
+### ER Diagram
+
+<img width="1440" height="1122" alt="ERD" src="https://github.com/user-attachments/assets/e94a7338-e302-45df-918e-0760b27a2393" />
+
+
 ## API Endpoints
 
 ### Auth
