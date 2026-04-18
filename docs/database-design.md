@@ -29,7 +29,6 @@
 ## NotificationLog
 
 - id
-- userId
 - taskId
 - type
 - message
