@@ -77,7 +77,7 @@ Relationships:
 
 ### ER Diagram
 
-<img width="1440" height="1122" alt="ERD" src="https://github.com/user-attachments/assets/e94a7338-e302-45df-918e-0760b27a2393" />
+<img width="800" alt="ER Diagram" src="https://github.com/user-attachments/assets/e94a7338-e302-45df-918e-0760b27a2393" />
 
 
 ## API Endpoints
