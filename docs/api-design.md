@@ -3,6 +3,12 @@
 - POST /api/auth/register
 - POST /api/auth/login
 
+## Users
+
+- GET /api/users/{id}
+- PUT /api/users/{id}
+- DELETE /api/users/{id}
+
 ## Tasks
 
 - GET /api/tasks
