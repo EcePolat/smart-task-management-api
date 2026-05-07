@@ -11,5 +11,6 @@ public record TaskCreateRequestDto(
         TaskStatus status,
         Priority priority,
         LocalDate dueDate,
+        Long userId,
         Long categoryId) {
 }
