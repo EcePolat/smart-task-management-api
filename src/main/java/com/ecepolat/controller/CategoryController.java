@@ -6,6 +6,7 @@ import com.ecepolat.dto.category.CategoryResponseDto;
 import com.ecepolat.dto.category.CategoryUpdateRequestDto;
 import com.ecepolat.entity.User;
 import com.ecepolat.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class CategoryController extends RestBaseController{
     }
 
     @PostMapping("")
-    public RootEntity<CategoryResponseDto> createCategory(@AuthenticationPrincipal User user,
+    public RootEntity<CategoryResponseDto> createCategory(@Valid @AuthenticationPrincipal User user,
                                                           @RequestBody CategoryCreateRequestDto request){
         return ok(categoryService.createCategory(user, request));
     }
@@ -33,7 +34,7 @@ public class CategoryController extends RestBaseController{
     }
 
     @PutMapping("/{id}")
-    public RootEntity<CategoryResponseDto> updateCategory(@PathVariable Long id, @RequestBody CategoryUpdateRequestDto request){
+    public RootEntity<CategoryResponseDto> updateCategory(@Valid @PathVariable Long id, @RequestBody CategoryUpdateRequestDto request){
         return ok(categoryService.updateCategory(id, request));
     }
 

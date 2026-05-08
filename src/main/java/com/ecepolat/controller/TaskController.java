@@ -7,6 +7,7 @@ import com.ecepolat.dto.task.TaskStatusUpdateRequestDto;
 import com.ecepolat.dto.task.TaskUpdateRequestDto;
 import com.ecepolat.entity.User;
 import com.ecepolat.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class TaskController extends RestBaseController{
     }
 
     @PostMapping
-    public RootEntity<TaskResponseDto> createTask(@RequestBody TaskCreateRequestDto request){
+    public RootEntity<TaskResponseDto> createTask(@Valid @RequestBody TaskCreateRequestDto request){
         return ok(taskService.createTask(request));
     }
 
@@ -39,13 +40,13 @@ public class TaskController extends RestBaseController{
     }
 
     @PutMapping("/{id}")
-    public RootEntity<TaskResponseDto> updateTask(@PathVariable Long id,
+    public RootEntity<TaskResponseDto> updateTask(@Valid @PathVariable Long id,
                                                   @RequestBody TaskUpdateRequestDto request){
         return ok(taskService.updateTask(id, request));
     }
 
     @PatchMapping("/{id}/status")
-    public RootEntity<TaskResponseDto> updateTaskStatus(@PathVariable Long id,
+    public RootEntity<TaskResponseDto> updateTaskStatus(@Valid @PathVariable Long id,
                                                         @RequestBody TaskStatusUpdateRequestDto request){
         return ok(taskService.updateTaskStatus(id, request));
     }

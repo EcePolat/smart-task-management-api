@@ -3,6 +3,8 @@ package com.ecepolat.service.impl;
 import com.ecepolat.dto.user.ChangePasswordRequestDto;
 import com.ecepolat.dto.user.UserResponseDto;
 import com.ecepolat.entity.User;
+import com.ecepolat.exception.BusinessException;
+import com.ecepolat.exception.ErrorCode;
 import com.ecepolat.mapper.UserMapper;
 import com.ecepolat.repository.UserRepository;
 import com.ecepolat.service.UserService;
@@ -22,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     private User findUserById(Long id){
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı"));
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
     }
 
     @Override

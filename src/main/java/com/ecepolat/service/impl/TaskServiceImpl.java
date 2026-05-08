@@ -7,6 +7,8 @@ import com.ecepolat.dto.task.TaskUpdateRequestDto;
 import com.ecepolat.entity.Category;
 import com.ecepolat.entity.Task;
 import com.ecepolat.entity.User;
+import com.ecepolat.exception.BusinessException;
+import com.ecepolat.exception.ErrorCode;
 import com.ecepolat.mapper.TaskMapper;
 import com.ecepolat.repository.CategoryRepository;
 import com.ecepolat.repository.TaskRepository;
@@ -36,20 +38,20 @@ public class TaskServiceImpl implements TaskService {
 
     private Task findByTaskId(Long id){
         return taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task bulunamadı."));
+                .orElseThrow(() -> new BusinessException(ErrorCode.TASK_NOT_FOUND));
     }
 
     @Override
     public TaskResponseDto createTask(TaskCreateRequestDto request) {
 
         User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı"));
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         Category category = null;
 
         if(request.categoryId() != null){
             category = categoryRepository.findById(request.categoryId())
-                    .orElseThrow(() -> new RuntimeException("Kategori bulunamadı"));
+                    .orElseThrow(() -> new BusinessException(ErrorCode.CATEGORY_NOT_FOUND));
         }
 
         Task task = new Task();
@@ -92,7 +94,7 @@ public class TaskServiceImpl implements TaskService {
 
         if(request.categoryId() != null){
             Category category = categoryRepository.findById(request.categoryId())
-                    .orElseThrow(() -> new RuntimeException("Kategori bulunamadı."));
+                    .orElseThrow(() -> new BusinessException(ErrorCode.CATEGORY_NOT_FOUND));
 
             task.setCategory(category);
         }

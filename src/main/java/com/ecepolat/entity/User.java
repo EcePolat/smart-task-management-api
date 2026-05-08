@@ -2,6 +2,7 @@ package com.ecepolat.entity;
 
 import com.ecepolat.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,7 @@ public class User {
     private String name;
 
     @Column(nullable = false, unique = true, length = 150)
+    @Email
     private String email;
 
     @Column(nullable = false)
