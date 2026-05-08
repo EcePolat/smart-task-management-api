@@ -5,6 +5,8 @@ import com.ecepolat.dto.category.CategoryResponseDto;
 import com.ecepolat.dto.category.CategoryUpdateRequestDto;
 import com.ecepolat.entity.Category;
 import com.ecepolat.entity.User;
+import com.ecepolat.exception.BusinessException;
+import com.ecepolat.exception.ErrorCode;
 import com.ecepolat.mapper.CategoryMapper;
 import com.ecepolat.repository.CategoryRepository;
 import com.ecepolat.repository.UserRepository;
@@ -30,14 +32,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     private Category findByCategoryId(Long id){
         return categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Kategori bulunamadı."));
+                .orElseThrow(() -> new BusinessException(ErrorCode.CATEGORY_NOT_FOUND));
     }
 
     @Override
     public CategoryResponseDto createCategory(User user, CategoryCreateRequestDto request) {
 
         if(categoryRepository.existsByNameAndUserId(request.name(), user.getId())){
-            throw new RuntimeException("Bu kategori zaten mevcut.");
+            throw new BusinessException(ErrorCode.CATEGORY_ALREADY_EXISTS);
         }
 
         Category category = new Category();

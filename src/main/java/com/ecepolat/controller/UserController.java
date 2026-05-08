@@ -5,6 +5,7 @@ import com.ecepolat.dto.user.ChangePasswordRequestDto;
 import com.ecepolat.dto.user.UserResponseDto;
 import com.ecepolat.dto.user.UserUpdateRequestDto;
 import com.ecepolat.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,7 +24,7 @@ public class UserController extends RestBaseController{
     }
 
     @PatchMapping("/{id}/change-password")
-    public RootEntity<String> changePassword(@PathVariable Long id,
+    public RootEntity<String> changePassword(@Valid @PathVariable Long id,
                                                       @RequestBody ChangePasswordRequestDto request){
         userService.changePassword(id, request);
         return ok("Şifre başarıyla değiştirildi.");

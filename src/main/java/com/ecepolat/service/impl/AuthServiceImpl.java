@@ -5,6 +5,8 @@ import com.ecepolat.dto.auth.LoginRequestDto;
 import com.ecepolat.dto.auth.RegisterRequestDto;
 import com.ecepolat.entity.User;
 import com.ecepolat.enums.Role;
+import com.ecepolat.exception.BusinessException;
+import com.ecepolat.exception.ErrorCode;
 import com.ecepolat.repository.UserRepository;
 import com.ecepolat.security.JwtService;
 import com.ecepolat.service.AuthService;
@@ -35,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponseDto register(RegisterRequestDto request) {
 
         if(userRepository.existsByEmail(request.email())){
-            throw new RuntimeException("Bu email zaten kullanılıyor.");
+            throw new BusinessException(ErrorCode.EMAIL_ALREADY_EXISTS);
         }
 
         User user = new User();
@@ -53,10 +55,10 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponseDto login(LoginRequestDto request) {
 
         User user = userRepository.findByEmail(request.email())
-                .orElseThrow(()-> new RuntimeException("Kullanıcı bulunamadı."));
+                .orElseThrow(()-> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         if(!user.getPassword().equals(request.password())){
-            throw new RuntimeException("Şifre hatalı.");
+            throw new BusinessException(ErrorCode.PASSWORD_IS_WRONG);
         }
 
         return generateAuthResponse(user);
