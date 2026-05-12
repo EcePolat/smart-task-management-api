@@ -1,18 +1,25 @@
 package com.ecepolat.security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 
+@Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "8fK2lPq9ZxWmT7sVbY3dR4nHkL1cQwEo";
+    @Value("${jwt.secret}")
+    private String secretKey;
 
     private SecretKey getSignInKey(){
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public String generateAccessToken(String email){
@@ -38,8 +45,12 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token, String email){
-        String tokenEmail = extractEmail(token);
-        return tokenEmail.equals(email) && !isTokenExpired(token);
+        try {
+            String tokenEmail = extractEmail(token);
+            return tokenEmail.equals(email) && !isTokenExpired(token);
+        } catch (JwtException e){
+            return false;
+        }
     }
 
     private boolean isTokenExpired(String token){
