@@ -34,11 +34,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(Long id, ChangePasswordRequestDto request) {
-        User user = findUserById(id);
+    public void changePassword(String email, ChangePasswordRequestDto request) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(()-> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         if(!user.getPassword().equals(request.oldPassword())){
-            throw new RuntimeException("Eski şifre hatalı");
+            throw new BusinessException(ErrorCode.PASSWORD_IS_WRONG);
         }
 
         user.setPassword(request.newPassword());
